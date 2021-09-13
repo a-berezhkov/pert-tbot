@@ -10,6 +10,7 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 
 logger = logging.getLogger(__name__)
 
+PORT = int(os.environ.get('PORT', 80))
 BOT_KEY = "здесь ключ бота должен быть"
 
 
@@ -74,8 +75,13 @@ def main():
     # log all errors
     dp.add_error_handler(error)
 
+    updater.start_webhook(listen="0.0.0.0",
+                          port=PORT,
+                          url_path=BOT_KEY,
+                          webhook_url="адрес с heroku" + BOT_KEY)
+
     # Start the Bot
-    updater.start_polling()
+    #updater.start_polling()
 
     # Run the bot until you press Ctrl-C or the process receives SIGINT,
     # SIGTERM or SIGABRT. This should be used most of the time, since
